@@ -21,12 +21,12 @@ const CustomClearaceOrder = () => {
     clearing_agent: "",
     comment_on_docs: "",
   });
-   const [formFiles, setFormFiles] = useState({
-      supplier_invoice: [],
-      other_documents: [],
-      licenses: [],
-      packing_list: [],
-    });
+  const [formFiles, setFormFiles] = useState({
+    supplier_invoice: [],
+    other_documents: [],
+    licenses: [],
+    packing_list: [],
+  });
   const [constgetdata, setConstgetdata] = useState([]);
   const [erd, setErd] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
@@ -83,10 +83,10 @@ const CustomClearaceOrder = () => {
     formdata.append("destination", data?.destination);
     formdata.append("document", selectedImage);
     formdata.append("comment_on_docs", data?.comment_on_docs);
-    formdata.append("document_name", data?.document_name);
+    // formdata.append("document_name", data?.document_name);
     formdata.append("sales_representative", data?.sales_representative);
     console.log(formdata);
-     Object.entries(formFiles).forEach(([key, files]) => {
+    Object.entries(formFiles).forEach(([key, files]) => {
       files.forEach((file) => {
         formdata.append(key, file); // backend should use multer.array(fieldName)
       });
@@ -117,8 +117,8 @@ const CustomClearaceOrder = () => {
           route_url: "/update-clearing",
           user_type: usertype,
         }
-      );  
-            if (permission.data.success) {
+      );
+      if (permission.data.success) {
         const formdata = new FormData();
         formdata.append("added_by", "1");
         formdata.append("clearing_id", erd);
@@ -140,11 +140,11 @@ const CustomClearaceOrder = () => {
         formdata.append("comment_on_docs", inputdata.comment_on_docs);
         formdata.append("customer_ref", inputdata.customer_ref);
         formdata.append("sales_representative", inputdata.sales_representative);
-         Object.entries(formFiles).forEach(([key, files]) => {
-      files.forEach((file) => {
-        formdata.append(key, file); // backend should use multer.array(fieldName)
-      });
-    });
+        Object.entries(formFiles).forEach(([key, files]) => {
+          files.forEach((file) => {
+            formdata.append(key, file); // backend should use multer.array(fieldName)
+          });
+        });
         axios
           .post(`${process.env.REACT_APP_BASE_URL}update-clearing`, formdata)
           .then((response) => {
@@ -194,7 +194,7 @@ const CustomClearaceOrder = () => {
       customer_ref: selectuser?.customer_ref,
       destination: selectuser?.destination,
       comment_on_docs: selectuser?.comment_on_docs,
-      document_name: selectuser?.document_name,
+      // document_name: selectuser?.document_name,
     });
     setIsUpdating(true);
     setShowModal(true);
@@ -276,10 +276,17 @@ const CustomClearaceOrder = () => {
     console.log(datauser);
     navigate("/Admin/Custom-details", { state: { data: [datauser] } });
   };
+  const handleclick1212 = (id) => {
+    const datauser = constgetdata.find((item) => item.id === id);
+    console.log(datauser);
+    navigate("/Admin/AdminclearenceDetails", { state: { data: [datauser] } });
+  };
   const handlelcickestrachange = (id) => {
     const datauser = constgetdata.find((item) => item.id === id);
     console.log(datauser);
-    navigate("/Admin/shipping-estimate-clearence", { state: { data: [datauser], data12:"update" } });
+    navigate("/Admin/shipping-estimate-clearence", {
+      state: { data: [datauser], data12: "update" },
+    });
   };
   const handlePageChange = (page) => {
     setCurrentPage(page);
@@ -466,18 +473,18 @@ const CustomClearaceOrder = () => {
       e.preventDefault();
     }
   };
-  
+
   //////////////////////////////////////////// edit modal work///////////////////////////////////////
   const handleOpenModal = () => setIsModalOpen(true);
   const handleCloseModal = () => setIsModalOpen(false);
 
-  const editQuotation = async (id)=>{    
-    console.log(id)
-      const datauser = constgetdata.find((item) => item.id === id.id);
-      console.log(datauser);
-      navigate("/Admin/Editpdfclearence", { state: { data: [datauser] } });
-          // navigate("/Admin/Editpdfclearence", { state: { data: id, secretdata :"dataedit" } });     
-  }
+  const editQuotation = async (id) => {
+    console.log(id);
+    const datauser = constgetdata.find((item) => item.id === id.id);
+    console.log(datauser);
+    navigate("/Admin/Editpdfclearence", { state: { data: [datauser] } });
+    // navigate("/Admin/Editpdfclearence", { state: { data: id, secretdata :"dataedit" } });
+  };
 
   const postData = () => {
     const dtatapost = {
@@ -501,8 +508,6 @@ const CustomClearaceOrder = () => {
         toast.error(error.response.data.message);
       });
   };
-
-
 
   const handleFileChange = (e, fieldName) => {
     const files = Array.from(e.target.files);
@@ -635,7 +640,23 @@ const CustomClearaceOrder = () => {
                                                   width: "20px",
                                                 }}
                                               />
-                                              View
+                                              View Quotation
+                                            </a>
+                                            <a
+                                              className="dropdown-item li_icon"
+                                              onClick={() =>
+                                                handleclick1212(item.id)
+                                              }
+                                            >
+                                              <VisibilityIcon
+                                                style={{
+                                                  color: "rgb(27 34 69)",
+                                                  cursor: "pointer",
+                                                  marginRight: "10px",
+                                                  width: "20px",
+                                                }}
+                                              />
+                                              View Details
                                             </a>
                                             {/* <a
                                               className="dropdown-item li_icon"
@@ -727,7 +748,7 @@ const CustomClearaceOrder = () => {
                                             <a
                                               className="dropdown-item li_icon NewDropdown"
                                               onClick={() =>
-                                              editQuotation(item)
+                                                editQuotation(item)
                                               }
                                             >
                                               <div className="action_btn">
@@ -1143,7 +1164,9 @@ const CustomClearaceOrder = () => {
               </div>
               <div className="row">
                 <div className="col-md-12">
-                  <h6 className="md_heading text-start">Port of Clearing Details</h6>
+                  <h6 className="md_heading text-start">
+                    Port of Clearing Details
+                  </h6>
                 </div>
               </div>
               <div className="row">
@@ -1367,10 +1390,6 @@ const CustomClearaceOrder = () => {
                       }
                       placeholder="0.00"
                     ></input>
-
-
-
-                    
                   </div>
                 </div>
               </div>
@@ -1392,7 +1411,7 @@ const CustomClearaceOrder = () => {
                     ></input>
                   </div>
                 </div>
-                <div className="col-md-6">
+                {/* <div className="col-md-6">
                   <div className="mb-3">
                     <label htmlFor="clearing_agent" className="form-label">
                       Add Attachment
@@ -1416,58 +1435,51 @@ const CustomClearaceOrder = () => {
                       <option value="other documents">Other documents</option>
                     </select>
                   </div>
+                </div> */}
+              </div>
+              <div className="row">
+                <div className="col-6 mt-3">
+                  <label>Product Literature</label>
+                  <input
+                    type="file"
+                    multiple
+                    className="w-100 mb-3 rounded"
+                    onChange={(e) => handleFileChange(e, "product_literature")}
+                  />
+                </div>
+                <div className="col-6 mt-3">
+                  <label>Packing List</label>
+
+                  <input
+                    type="file"
+                    multiple
+                    className="w-100 mb-3 rounded"
+                    onChange={(e) => handleFileChange(e, "packing_list")}
+                  />
                 </div>
               </div>
               <div className="row">
-               
-                 <div className="col-6 mt-3">
-                          <label>Add attachments</label>
-                          <input
-                            type="file"
-                            multiple
-                            className="w-100 mb-3 rounded"
-                            onChange={(e) =>
-                              handleFileChange(e, "supplier_invoice")
-                            }
-                          />
-              </div>
                 <div className="col-6 mt-3">
-                          <label>Packing List</label>
-                        
-                          <input
-                            type="file"
-                            multiple
-                            className="w-100 mb-3 rounded"
-                            onChange={(e) =>
-                              handleFileChange(e, "packing_list")
-                            }
-                          />
-                        </div>
+                  <label>licenses</label>
+
+                  <input
+                    type="file"
+                    multiple
+                    className="w-100 mb-3 rounded"
+                    onChange={(e) => handleFileChange(e, "licenses")}
+                  />
+                </div>
+                <div className="col-6 mt-3">
+                  <label>Other Documents</label>
+
+                  <input
+                    type="file"
+                    multiple
+                    className="w-100 mb-3 rounded"
+                    onChange={(e) => handleFileChange(e, "other_documents")}
+                  />
+                </div>
               </div>
-                  <div className="row">
-                        <div className="col-6 mt-3">
-                          <label>licenses</label>
-                          
-                          <input
-                            type="file"
-                            multiple
-                            className="w-100 mb-3 rounded"
-                            onChange={(e) => handleFileChange(e, "licenses")}
-                          />
-                        </div>
-                        <div className="col-6 mt-3">
-                          <label>Other Documents</label>
-                          
-                          <input
-                            type="file"
-                            multiple
-                            className="w-100 mb-3 rounded"
-                            onChange={(e) =>
-                              handleFileChange(e, "other_documents")
-                            }
-                          />
-                        </div>
-                      </div>
             </div>
             <div className="modal-footer">
               <button

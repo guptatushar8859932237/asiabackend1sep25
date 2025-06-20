@@ -40,6 +40,10 @@ export default function UserFreight() {
   const [selectfile1, setSelectfile1] = useState(null);
   const [loader, setLoader] = useState(true);
   const [country, setCountry] = useState([]);
+   const [formData, setFormData] = useState(null);
+    const [formData1, setFormData1] = useState(null);
+    const [formData2, setFormData2] = useState(null);
+    const [formData3, setFormData3] = useState(null);
   const [status1, setStatus1] = useState("Status");
   const [inputdata, setInputdata] = useState({
     add_attachments: "",
@@ -221,8 +225,27 @@ export default function UserFreight() {
     const { name, value } = e.target;
     setInputdata({ ...inputdata, [name]: value });
   };
-  const handleupdateapipost = (id) => {
-    const permission = axios.post(
+
+
+  // multiple imagge
+    const handleFileChange4 = (event) => {
+    const files = event.target.files;
+    setFormData({ ...formData, supplier_invoice: files });
+  };
+  const handleFileChange1 = (event) => {
+    const files = event.target.files;
+    setFormData1({ ...formData1, packing_list: files });
+  };
+  const handleFileChange2 = (event) => {
+    const files = event.target.files;
+    setFormData2({ ...formData2, licenses: files });
+  };
+  const handleFileChange3 = (event) => {
+    const files = event.target.files;
+    setFormData3({ ...formData3, other_documents: files });
+  };
+  const handleupdateapipost =async (id) => {
+    const permission =await axios.post(
       `${process.env.REACT_APP_BASE_URL}CheckPermission`,
       {
         staff_id: userid,
@@ -230,7 +253,8 @@ export default function UserFreight() {
         user_type: usertype,
       }
     );
-    if (permission.status === 200 && permission.data.success) {
+    console.log(permission)
+    if (permission.status === 200) {
       console.log("Client ID:", inputdata.client_id);
       const formData12 = new FormData();
       formData12.append("client_id", inputdata.client_id);
@@ -271,12 +295,31 @@ export default function UserFreight() {
       );
       formData12.append("road_freight_option", inputdata.road_freight_option);
       formData12.append("sea_freight_option", inputdata.sea_freight_option);
-      formData12.append("document", selectfile1);
+     if (formData) {
+      for (let i = 0; i < formData.supplier_invoice.length; i++) {
+        formData12.append("supplier_invoice", formData.supplier_invoice[i]);
+      }
+    }
+    if (formData1) {
+      for (let i = 0; i < formData1.packing_list.length; i++) {
+        formData12.append("packing_list", formData1.packing_list[i]);
+      }
+    }
+    if (formData2) {
+      for (let i = 0; i < formData2.licenses.length; i++) {
+        formData12.append("licenses", formData2.licenses[i]);
+      }
+    }
+    if (formData3) {
+      for (let i = 0; i < formData3.other_documents.length; i++) {
+        formData12.append("other_documents", formData3.other_documents[i]);
+      }
+    }
 
       for (let pair of formData12.entries()) {
         console.log(`${pair[0]}: ${pair[1]}`);
       }
-      axios
+    await  axios
         .post(`${process.env.REACT_APP_BASE_URL}update-freights`, formData12)
         .then((response) => {
           toast.success(response.data.message);
@@ -1668,20 +1711,57 @@ export default function UserFreight() {
                                                     </select>
                                                   </div>
                                                 </div>
-                                                <div className="col-lg-6">
-                                                  <div>
-                                                    <label>
-                                                      Add Attachment
-                                                    </label>
-                                                    <input
-                                                      type="file"
-                                                      name="document"
-                                                      onChange={
-                                                        handleupdateapifile
-                                                      }
-                                                    />
+                                                    <div className="col-6 mt-3">
+                                                      <h5>Add attachments</h5>
+                                                      <input
+                                                        type="file"
+                                                        name="supplier_invoice"
+                                                        className="w-100 mb-3 rounded"
+                                                        onChange={
+                                                          handleFileChange4
+                                                        }
+                                                        multiple
+                                                      />
+                                                    </div>
+                                                        <div className="col-6 mt-3">
+                                                      <h5>Packing List</h5>
+                                                      <input
+                                                        type="file"
+                                                        name="packing_list"
+                                                        className="mb-3 w-100 rounded"
+                                                        onChange={
+                                                          handleFileChange1
+                                                        }
+                                                        multiple
+                                                      />
+                                                    </div>
+                                                     <div className="col-6 mt-3">
+                                                      <h5>Other Documents</h5>
+                                                      <input
+                                                        type="file"
+                                                        name="other_documents"
+                                                        className="mb-3 w-100 rounded"
+                                                        onChange={
+                                                          handleFileChange3
+                                                        }
+                                                        multiple
+                                                      />
+                                                    </div>
+                                                     <div className="row">
+                                                    <div className="col-6 mt-3">
+                                                      <h5>licenses</h5>
+                                                      <input
+                                                        type="file"
+                                                        name="licenses"
+                                                        className="mb-3 w-100 rounded"
+                                                        onChange={
+                                                          handleFileChange2
+                                                        }
+                                                        multiple
+                                                      />
+                                                    </div>
+                                                   
                                                   </div>
-                                                </div>
                                               </div>
                                             </div>
                                           </div>

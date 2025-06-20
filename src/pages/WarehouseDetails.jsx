@@ -167,14 +167,99 @@ export default function WarehouseDetails() {
                             </tr>
                             <tr>
                               <td>
-                                <p className="client_para1 mb-3">Dispatch</p>
+                                <p className="client_para1 ">cost to collect</p>
+                              </td>
+                              <td>
+                                <p className="client_para1 "></p>
+                              </td>
+                              <td>
+                                <p className="client_para1 ">
+                                  {info.costs_to_collect}
+                                </p>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <p className="client_para1 ">Origin On Carriage Costs</p>
+                              </td>
+                              <td>
+                                <p className="client_para1 "></p>
+                              </td>
+                              <td>
+                                <p className="client_para1 ">
+                                  {info.origin_oncarriage_costs}
+                                </p>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <p className="client_para1 ">Origin Incidental cost</p>
                               </td>
                               <td>
                                 <p className="client_para1 mb-3"></p>
                               </td>
                               <td>
                                 <p className="client_para1 mb-3">
-                                  {info.costs_to_dispatch}
+                                  {info.origin_Incidental_costs}
+                                </p>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+               <div className="col-md-4 pe-4">
+                <div className=" card desti_card">
+                  <div className="card-body">
+                    <div>
+                      <h6 className="orgin_hd">Packages Details</h6>
+                      <span className="line"></span>
+                    </div>
+                    <div className="main_det">
+                      <div className="table-responsive">
+                        <table className="det_show">
+                          <tbody>
+                            <tr>
+                              <td className="fright_num">
+                                <p className="client_para1">Weight:</p>
+                              </td>
+                              <td>
+                                <p className="client_para1">
+                                  {info.total_warehouse_weight}
+                                </p>
+                              </td>
+                            </tr>
+                            <tr>
+
+                              <td>
+                                <p className="client_para1">Dimensions:</p>
+                              </td>
+                              <td>
+                                <p className="client_para1">
+                                 {info.total_warehouse_dimension}
+                                </p>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <p className="client_para1">Packages:</p>
+                              </td>
+                              <td>
+                                <p className="client_para1">
+                                  {info.total_warehouse_noOfPackages}
+                                </p>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <p className="client_para1">Orders:</p>
+                              </td>
+                              <td>
+                                <p className="client_para1">
+                                  
                                 </p>
                               </td>
                             </tr>
@@ -205,7 +290,6 @@ export default function WarehouseDetails() {
                 {apidata &&
                   apidata.length > 0 &&
                   apidata.map((item, index) => {
-                    console.log(item);
                     return (
                       <>
                         <tr className="border-bottom" key={index}>

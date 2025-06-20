@@ -412,7 +412,7 @@
 //       {loader ? (
 //         <div class="loader-container">
 //           <div class="loader"></div>
-//           <p class="loader-text">Updating... This may take some time</p>  
+//           <p class="loader-text">Updating... This may take some time</p>
 //         </div>
 //       ) : (
 //         <div className="wpWrapper">
@@ -1367,7 +1367,15 @@ import "react-toastify/dist/ReactToastify.css";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import { useNavigate } from "react-router-dom";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { Modal, Box, Typography, Button, IconButton,Grid , TextField ,  } from '@mui/material';
+import {
+  Modal,
+  Box,
+  Typography,
+  Button,
+  IconButton,
+  Grid,
+  TextField,
+} from "@mui/material";
 import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
 import CloseIcon from "@mui/icons-material/Close";
 const pageSize = 10;
@@ -1411,8 +1419,9 @@ export default function WarehouseOrder() {
   const navigate = useNavigate();
   const handleOpenModal = () => setIsModalOpen(true);
   const handleCloseModal = () => {
-        handleOpenModal3()
-    setIsModalOpen(false)};
+    setIsModalOpen(false);
+    handleOpenModal3();
+  };
   const handleOpenModal2 = () => setIsModalOpen2(true);
   const handleOpenModal3 = () => setIsModalOpen3(true);
   const handleCloseModal2 = () => setIsModalOpen2(false);
@@ -1496,9 +1505,9 @@ export default function WarehouseOrder() {
   const handlePageChange = (page) => {
     setCurrentPage(page);
   };
-  const handleEditClick = (freight_ID, warehouse_assign_order_id,order_id) => {
+  const handleEditClick = (freight_ID, warehouse_assign_order_id, order_id) => {
     console.log(freight_ID);
-    setOrderID(order_id)
+    setOrderID(order_id);
     setErd(warehouse_assign_order_id);
     const selectedData = data.find((item) => item.freight_ID === freight_ID);
     console.log(selectedData);
@@ -1599,12 +1608,11 @@ export default function WarehouseOrder() {
       packages: selectedData.packages,
       dimension: selectedData.dimension,
       weight: selectedData.weight,
-      
- 
-      costs_to_collect:selectedData.costs_to_collect,
-       warehouse_cost:selectedData.warehouse_cost,
-        warehouse_dispatch:selectedData.warehouse_dispatch,
-         cost_to_dispatch:selectedData.cost_to_dispatch
+
+      costs_to_collect: selectedData.costs_to_collect,
+      warehouse_cost: selectedData.warehouse_cost,
+      warehouse_dispatch: selectedData.warehouse_dispatch,
+      cost_to_dispatch: selectedData.cost_to_dispatch,
     };
     console.log(dataApi);
     axios
@@ -1734,7 +1742,7 @@ export default function WarehouseOrder() {
     axios
       .post(`${process.env.REACT_APP_BASE_URL}addWarehouseProduct`, dat11a)
       .then((response) => {
-        handleCloseModal3()
+        handleCloseModal3();
         toast.success(response.data.message);
         console.log(response.data);
       })
@@ -2364,12 +2372,12 @@ export default function WarehouseOrder() {
                                   <Grid item xs={12} sm={6}>
                                     <TextField
                                       fullWidth
-                                     
- 
                                       label="Costs to collect"
                                       variant="outlined"
                                       name="costs_to_collect"
-                                      value={selectedData.costs_to_collect || ""}
+                                      value={
+                                        selectedData.costs_to_collect || ""
+                                      }
                                       onChange={handleInputChange}
                                     />
                                   </Grid>
@@ -2386,12 +2394,12 @@ export default function WarehouseOrder() {
                                   <Grid item xs={12} sm={6}>
                                     <TextField
                                       fullWidth
-                                        
- 
                                       label="Warehouse Dispatch"
                                       variant="outlined"
                                       name="warehouse_dispatch"
-                                      value={selectedData.warehouse_dispatch || ""}
+                                      value={
+                                        selectedData.warehouse_dispatch || ""
+                                      }
                                       onChange={handleInputChange}
                                     />
                                   </Grid>
@@ -2401,7 +2409,9 @@ export default function WarehouseOrder() {
                                       label="Cost to Dispatch"
                                       variant="outlined"
                                       name="cost_to_dispatch"
-                                      value={selectedData.cost_to_dispatch || ""}
+                                      value={
+                                        selectedData.cost_to_dispatch || ""
+                                      }
                                       onChange={handleInputChange}
                                     />
                                   </Grid>
@@ -2422,15 +2432,13 @@ export default function WarehouseOrder() {
                                   justifyContent="space-between"
                                 >
                                   <div className="unsetLt">
-
-                                  
-                                  <Button
-                                    variant="contained"
-                                    className="save_btn text-center"
-                                    onClick={handleSubmit}
-                                  >
-                                    Submit
-                                  </Button>
+                                    <Button
+                                      variant="contained"
+                                      className="save_btn text-center"
+                                      onClick={handleSubmit}
+                                    >
+                                      Submit
+                                    </Button>
                                   </div>
                                 </Box>
                               </form>
@@ -2439,672 +2447,269 @@ export default function WarehouseOrder() {
                         </Box>
                       </Modal>
                       <Modal open={isModalOpen3} onClose={handleCloseModal3}>
-  <Box
-    sx={{
-      position: 'absolute',
-      top: '50%',
-      left: '50%',
-      transform: 'translate(-50%, -50%)',
-      width: '80%',
-      bgcolor: 'background.paper',
-      boxShadow: 24,
-      p: 4,
-      borderRadius: 2,
-      maxHeight: '90vh',
-      overflowY: 'auto',
-    }}
-  >
-    <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
-      <Typography variant="h6">Warehouse Detail</Typography>
-      <IconButton onClick={handleCloseModal3}>
-        <CloseIcon />
-      </IconButton>
-    </Box>
-
-    {/* Your form fields go here (input/select) */}
-     <div className="newModalGap  noFormaControl">
-                              <div className="row mb-3">
-                                <div className="col-md-6">
-                                  <label className="form-label">
-                                    Product Description
-                                  </label>
-                                  <input
-                                    type="text"
-                                    className="form-control"
-                                    placeholder="product description"
-                                    onChange={handlechangepro}
-                                    name="product_description"
-                                  />
-                                </div>
-                                <div className="col-md-6 noFormaControl">
-                                  <label className="form-label">
-                                    Harzadous
-                                  </label>
-                                  <select
-                                    onChange={handlechangepro}
-                                    name="Hazardous"
-                                  >
-                                    <option>Select...</option>
-                                    <option value="Yes">Yes</option>
-                                    <option value="No">No</option>
-                                  </select>
-                                </div>
-                              </div>
-                              <div className="row mb-3">
-                                <div className="col-md-6">
-                                  <label className="form-label">
-                                    Warehouse Ref.
-                                  </label>
-                                  <input
-                                    type="text"
-                                    className="form-control"
-                                    placeholder="warehouse reference"
-                                    name="warehouse_ref"
-                                    onChange={handlechangepro}
-                                  />
-                                </div>
-                                <div className="col-md-6">
-                                  <label className="form-label">
-                                    Data Received
-                                  </label>
-                                  <input
-                                    type="date"
-                                    className="form-control"
-                                    placeholder=""
-                                    name="date_received"
-                                    onChange={handlechangepro}
-                                  />
-                                </div>
-                              </div>
-                              <div className="row mb-3">
-                                <div className="col-md-6 noFormaControl">
-                                  <label className="form-label">
-                                    Package Type
-                                  </label>
-                                  <select
-                                    name="package_type"
-                                    onChange={handlechangepro}
-                                  >
-                                    <option value="">Select...</option>
-                                    <option value="box">Box</option>
-                                    <option value="crate">Crate</option>
-                                    <option value="pallet">Pallet</option>
-                                    <option value="bags">Bags</option>
-                                  </select>
-                                </div>
-                                <div className="col-md-6">
-                                  <label className="form-label">
-                                    Total Packages
-                                  </label>
-                                  <input
-                                    type="text"
-                                    className="form-control"
-                                    placeholder="0.00"
-                                    onKeyPress={handlekey}
-                                    name="packages"
-                                    onChange={handlechangepro}
-                                  />
-                                </div>
-                              </div>
-                              <div className="row mb-3">
-                                <div className="col-md-6">
-                                  <label className="form-label">
-                                    Dimension
-                                  </label>
-                                  <input
-                                    type="text"
-                                    name="dimension"
-                                    className="form-control"
-                                    placeholder="0.00"
-                                    onChange={handlechangepro}
-                                    onKeyPress={handlekey}
-                                  />
-                                </div>
-                                <div className="col-md-6">
-                                  <label className="form-label">Weight</label>
-                                  <input
-                                    type="text"
-                                    name="weight"
-                                    className="form-control"
-                                    placeholder="0.00"
-                                    onKeyPress={handlekey}
-                                    onChange={handlechangepro}
-                                  />
-                                </div>
-                              </div>
-                              <div className="row mb-3">
-                                <div className="col-md-6">
-                                  <label className="form-label">freight</label>
-                                  <input
-                                    type="text"
-                                    name="freight"
-                                    className="form-control"
-                                    placeholder="0.00"
-                                    onChange={handlechangepro}
-                                  />
-                                </div>
-                                <div className="col-md-6">
-                                  <label className="form-label">
-                                    supplier_address
-                                  </label>
-                                  <input
-                                    type="text"
-                                    name="supplier_address"
-                                    className="form-control"
-                                    placeholder="0.00"
-                                    onChange={handlechangepro}
-                                  />
-                                </div>
-                              </div>
-                              <div className="row mb-3">
-                                <div className="col-md-6">
-                                  <label className="form-label">supplier</label>
-                                  <input
-                                    type="text"
-                                    name="supplier"
-                                    className="form-control"
-                                    placeholder="0.00"
-                                    onChange={handlechangepro}
-                                  />
-                                </div>
-                                <div className="col-md-6">
-                                  <label className="form-label">
-                                    groupage_batch_ref
-                                  </label>
-                                  <input
-                                    type="text"
-                                    name="groupage_batch_ref"
-                                    className="form-control"
-                                    placeholder="0.00"
-                                    onChange={handlechangepro}
-                                  />
-                                </div>
-                              </div>
-                              <div className="row mb-3">
-                                <div className="col-md-6">
-                                  <label className="form-label">
-                                    date_dspatched
-                                  </label>
-                                  <input
-                                    type="text"
-                                    name="date_dspatched"
-                                    className="form-control"
-                                    placeholder="0.00"
-                                    onChange={handlechangepro}
-                                  />
-                                </div>
-                                <div className="col-md-6">
-                                  <label className="form-label">added_by</label>
-                                  <input
-                                    type="text"
-                                    name="added_by"
-                                    className="form-control"
-                                    placeholder="0.00"
-                                    onChange={handlechangepro}
-                                  />
-                                </div>
-                              </div>
-                              <div className="row mb-3">
-                                <div className="col-md-6">
-                                  <label className="form-label">
-                                    warehouse_order_id
-                                  </label>
-                                  <input
-                                    type="text"
-                                    name="warehouse_order_id"
-                                    className="form-control"
-                                    placeholder="0.00"
-                                    onChange={handlechangepro}
-                                    onKeyPress={handlekey}
-                                  />
-                                </div>
-                                <div className="col-md-6">
-                                  <label className="form-label">
-                                    costs_to_collect
-                                  </label>
-                                  <input
-                                    type="text"
-                                    name="costs_to_collect"
-                                    className="form-control"
-                                    placeholder="0.00"
-                                    onKeyPress={handlekey}
-                                    onChange={handlechangepro}
-                                  />
-                                </div>
-                              </div>
-                              <div className="row mb-3">
-                                <div className="col-md-6">
-                                  <label className="form-label">
-                                    port_of_loading
-                                  </label>
-                                  <input
-                                    type="text"
-                                    name="port_of_loading"
-                                    className="form-control"
-                                    placeholder="0.00"
-                                    onChange={handlechangepro}
-                                  />
-                                </div>
-                                <div className="col-md-6">
-                                  <label className="form-label">
-                                    warehouse_dispatch
-                                  </label>
-                                  <input
-                                    type="text"
-                                    name="warehouse_dispatch"
-                                    className="form-control"
-                                    placeholder="0.00"
-                                    onChange={handlechangepro}
-                                  />
-                                </div>
-                              </div>
-                              <div className="row mb-3">
-                                <div className="col-md-6">
-                                  <label className="form-label">
-                                    warehouse_cost
-                                  </label>
-                                  <input
-                                    type="text"
-                                    name="warehouse_cost"
-                                    className="form-control"
-                                    placeholder="0.00"
-                                    onChange={handlechangepro}
-                                    onKeyPress={handlekey}
-                                  />
-                                </div>
-                                <div className="col-md-6">
-                                  <label className="form-label">
-                                    cost_to_dispatch
-                                  </label>
-                                  <input
-                                    type="text"
-                                    name="cost_to_dispatch"
-                                    className="form-control"
-                                    placeholder="0.00"
-                                    onKeyPress={handlekey}
-                                    onChange={handlechangepro}
-                                  />
-                                </div>
-                              </div>
-                              <div className="row mb-3">
-                                <div className="col-md-12">
-                                  <label className="form-label">
-                                    waybill_ref
-                                  </label>
-                                  <input
-                                    type="text"
-                                    name="waybill_ref"
-                                    className="form-control"
-                                    placeholder="0.00"
-                                    onChange={handlechangepro}
-                                  />
-                                </div>
-                              </div>
-                            
-                            <div class="modal-footer">
-                              {/* <button
-                                type="button"
-                                class="btn btn-secondary closeSpacing"
-                                data-bs-dismiss="modal"
-                              >
-                                Close
-                              </button> */}
-                              {/* <button
-                                type="button"
-                                class="btn btn-primary ms-0 me-0"
-                                onClick={handpechangepro}
-                                style={{transform:"unset"}}
-                              >
-                                Save changes
-                              </button> */}
-                            </div>
-                            </div>
-
-    <Box mt={3} display="flex" justifyContent="flex-end">
-      <Button variant="contained" onClick={handpechangepro}>Save Changes</Button>
-    </Box>
-  </Box>
-</Modal>
-                       {/* <Modal
-                        open={isModalOpen3}
-                        onClose={handleCloseModal3}
-                        aria-labelledby="modal-modal-title"
-                        aria-describedby="modal-modal-description"
-                      >
                         <Box
                           sx={{
                             position: "absolute",
                             top: "50%",
                             left: "50%",
                             transform: "translate(-50%, -50%)",
+                            width: "80%",
+                            bgcolor: "background.paper",
+                            boxShadow: 24,
+                            p: 4,
+                            borderRadius: 2,
+                            maxHeight: "90vh",
+                            overflowY: "auto",
                           }}
                         >
-                   
-                            <div class="modal-header">
-                              <h1
-                                class="modal-title fs-5"
-                                id="exampleModalLabel"
-                              >
-                                Warehouse Detail
-                              </h1>
-                              <button
-                                type="button"
-                                class="btn-close"
-                                data-bs-dismiss="modal"
-                                aria-label="Close"
-                              >
-                        <CloseIcon />
+                          <Box
+                            display="flex"
+                            justifyContent="space-between"
+                            alignItems="center"
+                            mb={2}
+                          >
+                            <Typography variant="h6">
+                              Warehouse Detail
+                            </Typography>
+                            <IconButton onClick={handleCloseModal3}>
+                              <CloseIcon />
+                            </IconButton>
+                          </Box>
 
-                              </button>
+                          {/* Your form fields go here (input/select) */}
+                          <div className="newModalGap  noFormaControl">
+                            <div className="row mb-3">
+                              <div className="col-md-6">
+                                <label className="form-label">
+                                  Product Description
+                                </label>
+                                <input
+                                  type="text"
+                                  className="form-control"
+                                  placeholder="product description"
+                                  onChange={handlechangepro}
+                                  name="product_description"
+                                />
+                              </div>
+                              <div className="col-md-6 noFormaControl">
+                                <label className="form-label">Harzadous</label>
+                                <select
+                                  onChange={handlechangepro}
+                                  name="Hazardous"
+                                >
+                                  <option>Select...</option>
+                                  <option value="Yes">Yes</option>
+                                  <option value="No">No</option>
+                                </select>
+                              </div>
                             </div>
-                            
-                           
-                            <div className="newModalGap  noFormaControl">
-                              <div className="row mb-3">
-                                <div className="col-md-6">
-                                  <label className="form-label">
-                                    Product Description
-                                  </label>
-                                  <input
-                                    type="text"
-                                    className="form-control"
-                                    placeholder="product description"
-                                    onChange={handlechangepro}
-                                    name="product_description"
-                                  />
-                                </div>
-                                <div className="col-md-6 noFormaControl">
-                                  <label className="form-label">
-                                    Harzadous
-                                  </label>
-                                  <select
-                                    onChange={handlechangepro}
-                                    name="Hazardous"
-                                  >
-                                    <option>Select...</option>
-                                    <option value="Yes">Yes</option>
-                                    <option value="No">No</option>
-                                  </select>
-                                </div>
+                            <div className="row mb-3">
+                              <div className="col-md-6">
+                                <label className="form-label">
+                                  Warehouse Ref.
+                                </label>
+                                <input
+                                  type="text"
+                                  className="form-control"
+                                  placeholder="warehouse reference"
+                                  name="warehouse_ref"
+                                  onChange={handlechangepro}
+                                />
                               </div>
-                              <div className="row mb-3">
-                                <div className="col-md-6">
-                                  <label className="form-label">
-                                    Warehouse Ref.
-                                  </label>
-                                  <input
-                                    type="text"
-                                    className="form-control"
-                                    placeholder="warehouse reference"
-                                    name="warehouse_ref"
-                                    onChange={handlechangepro}
-                                  />
-                                </div>
-                                <div className="col-md-6">
-                                  <label className="form-label">
-                                    Data Received
-                                  </label>
-                                  <input
-                                    type="date"
-                                    className="form-control"
-                                    placeholder=""
-                                    name="date_received"
-                                    onChange={handlechangepro}
-                                  />
-                                </div>
+                              <div className="col-md-6">
+                                <label className="form-label">
+                                  Data Received
+                                </label>
+                                <input
+                                  type="date"
+                                  className="form-control"
+                                  placeholder=""
+                                  name="date_received"
+                                  onChange={handlechangepro}
+                                />
                               </div>
-                              <div className="row mb-3">
-                                <div className="col-md-6 noFormaControl">
-                                  <label className="form-label">
-                                    Package Type
-                                  </label>
-                                  <select
-                                    name="package_type"
-                                    onChange={handlechangepro}
-                                  >
-                                    <option value="">Select...</option>
-                                    <option value="box">Box</option>
-                                    <option value="crate">Crate</option>
-                                    <option value="pallet">Pallet</option>
-                                    <option value="bags">Bags</option>
-                                  </select>
-                                </div>
-                                <div className="col-md-6">
-                                  <label className="form-label">
-                                    Total Packages
-                                  </label>
-                                  <input
-                                    type="text"
-                                    className="form-control"
-                                    placeholder="0.00"
-                                    onKeyPress={handlekey}
-                                    name="packages"
-                                    onChange={handlechangepro}
-                                  />
-                                </div>
-                              </div>
-                              <div className="row mb-3">
-                                <div className="col-md-6">
-                                  <label className="form-label">
-                                    Dimension
-                                  </label>
-                                  <input
-                                    type="text"
-                                    name="dimension"
-                                    className="form-control"
-                                    placeholder="0.00"
-                                    onChange={handlechangepro}
-                                    onKeyPress={handlekey}
-                                  />
-                                </div>
-                                <div className="col-md-6">
-                                  <label className="form-label">Weight</label>
-                                  <input
-                                    type="text"
-                                    name="weight"
-                                    className="form-control"
-                                    placeholder="0.00"
-                                    onKeyPress={handlekey}
-                                    onChange={handlechangepro}
-                                  />
-                                </div>
-                              </div>
-                              <div className="row mb-3">
-                                <div className="col-md-6">
-                                  <label className="form-label">freight</label>
-                                  <input
-                                    type="text"
-                                    name="freight"
-                                    className="form-control"
-                                    placeholder="0.00"
-                                    onChange={handlechangepro}
-                                  />
-                                </div>
-                                <div className="col-md-6">
-                                  <label className="form-label">
-                                    supplier_address
-                                  </label>
-                                  <input
-                                    type="text"
-                                    name="supplier_address"
-                                    className="form-control"
-                                    placeholder="0.00"
-                                    onChange={handlechangepro}
-                                  />
-                                </div>
-                              </div>
-                              <div className="row mb-3">
-                                <div className="col-md-6">
-                                  <label className="form-label">supplier</label>
-                                  <input
-                                    type="text"
-                                    name="supplier"
-                                    className="form-control"
-                                    placeholder="0.00"
-                                    onChange={handlechangepro}
-                                  />
-                                </div>
-                                <div className="col-md-6">
-                                  <label className="form-label">
-                                    groupage_batch_ref
-                                  </label>
-                                  <input
-                                    type="text"
-                                    name="groupage_batch_ref"
-                                    className="form-control"
-                                    placeholder="0.00"
-                                    onChange={handlechangepro}
-                                  />
-                                </div>
-                              </div>
-                              <div className="row mb-3">
-                                <div className="col-md-6">
-                                  <label className="form-label">
-                                    date_dspatched
-                                  </label>
-                                  <input
-                                    type="text"
-                                    name="date_dspatched"
-                                    className="form-control"
-                                    placeholder="0.00"
-                                    onChange={handlechangepro}
-                                  />
-                                </div>
-                                <div className="col-md-6">
-                                  <label className="form-label">added_by</label>
-                                  <input
-                                    type="text"
-                                    name="added_by"
-                                    className="form-control"
-                                    placeholder="0.00"
-                                    onChange={handlechangepro}
-                                  />
-                                </div>
-                              </div>
-                              <div className="row mb-3">
-                                <div className="col-md-6">
-                                  <label className="form-label">
-                                    warehouse_order_id
-                                  </label>
-                                  <input
-                                    type="text"
-                                    name="warehouse_order_id"
-                                    className="form-control"
-                                    placeholder="0.00"
-                                    onChange={handlechangepro}
-                                    onKeyPress={handlekey}
-                                  />
-                                </div>
-                                <div className="col-md-6">
-                                  <label className="form-label">
-                                    costs_to_collect
-                                  </label>
-                                  <input
-                                    type="text"
-                                    name="costs_to_collect"
-                                    className="form-control"
-                                    placeholder="0.00"
-                                    onKeyPress={handlekey}
-                                    onChange={handlechangepro}
-                                  />
-                                </div>
-                              </div>
-                              <div className="row mb-3">
-                                <div className="col-md-6">
-                                  <label className="form-label">
-                                    port_of_loading
-                                  </label>
-                                  <input
-                                    type="text"
-                                    name="port_of_loading"
-                                    className="form-control"
-                                    placeholder="0.00"
-                                    onChange={handlechangepro}
-                                  />
-                                </div>
-                                <div className="col-md-6">
-                                  <label className="form-label">
-                                    warehouse_dispatch
-                                  </label>
-                                  <input
-                                    type="text"
-                                    name="warehouse_dispatch"
-                                    className="form-control"
-                                    placeholder="0.00"
-                                    onChange={handlechangepro}
-                                  />
-                                </div>
-                              </div>
-                              <div className="row mb-3">
-                                <div className="col-md-6">
-                                  <label className="form-label">
-                                    warehouse_cost
-                                  </label>
-                                  <input
-                                    type="text"
-                                    name="warehouse_cost"
-                                    className="form-control"
-                                    placeholder="0.00"
-                                    onChange={handlechangepro}
-                                    onKeyPress={handlekey}
-                                  />
-                                </div>
-                                <div className="col-md-6">
-                                  <label className="form-label">
-                                    cost_to_dispatch
-                                  </label>
-                                  <input
-                                    type="text"
-                                    name="cost_to_dispatch"
-                                    className="form-control"
-                                    placeholder="0.00"
-                                    onKeyPress={handlekey}
-                                    onChange={handlechangepro}
-                                  />
-                                </div>
-                              </div>
-                              <div className="row mb-3">
-                                <div className="col-md-12">
-                                  <label className="form-label">
-                                    waybill_ref
-                                  </label>
-                                  <input
-                                    type="text"
-                                    name="waybill_ref"
-                                    className="form-control"
-                                    placeholder="0.00"
-                                    onChange={handlechangepro}
-                                  />
-                                </div>
-                              </div>
-                            
-                            <div class="modal-footer">
-                              {/* <button
-                                type="button"
-                                class="btn btn-secondary closeSpacing"
-                                data-bs-dismiss="modal"
-                              >
-                                Close
-                              </button> */}
-                              {/* <button
-                                type="button"
-                                class="btn btn-primary ms-0 me-0"
-                                onClick={handpechangepro}
-                                style={{transform:"unset"}}
-                              >
-                                Save changes
-                              </button>
                             </div>
+                            <div className="row mb-3">
+                              <div className="col-md-6 noFormaControl">
+                                <label className="form-label">
+                                  Package Type
+                                </label>
+                                <select
+                                  name="package_type"
+                                  onChange={handlechangepro}
+                                >
+                                  <option value="">Select...</option>
+                                  <option value="box">Box</option>
+                                  <option value="crate">Crate</option>
+                                  <option value="pallet">Pallet</option>
+                                  <option value="bags">Bags</option>
+                                </select>
+                              </div>
+                              <div className="col-md-6">
+                                <label className="form-label">
+                                  Total Packages
+                                </label>
+                                <input
+                                  type="text"
+                                  className="form-control"
+                                  placeholder="0.00"
+                                  onKeyPress={handlekey}
+                                  name="packages"
+                                  onChange={handlechangepro}
+                                />
+                              </div>
                             </div>
-                           
-                        
-                    </Box>
-                    </Modal> */} 
-                      </div>
+                            <div className="row mb-3">
+                              <div className="col-md-6">
+                                <label className="form-label">Dimension</label>
+                                <input
+                                  type="text"
+                                  name="dimension"
+                                  className="form-control"
+                                  placeholder="0.00"
+                                  onChange={handlechangepro}
+                                  onKeyPress={handlekey}
+                                />
+                              </div>
+                              <div className="col-md-6">
+                                <label className="form-label">Weight</label>
+                                <input
+                                  type="text"
+                                  name="weight"
+                                  className="form-control"
+                                  placeholder="0.00"
+                                  onKeyPress={handlekey}
+                                  onChange={handlechangepro}
+                                />
+                              </div>
+                            </div>
+                            <div className="row mb-3">
+                              <div className="col-md-6">
+                                <label className="form-label">
+                                  Supplier Address
+                                </label>
+                                <input
+                                  type="text"
+                                  name="supplier_address"
+                                  className="form-control"
+                                  placeholder="0.00"
+                                  onChange={handlechangepro}
+                                />
+                              </div>
+                              <div className="col-md-6">
+                                <label className="form-label">
+                                  supplier</label>
+                                <input
+                                  type="text"
+                                  name="supplier"
+                                  className="form-control"
+                                  placeholder="0.00"
+                                  onChange={handlechangepro}
+                                />
+                              </div>
+                            </div>
+
+                            <div className="row mb-3">
+                              <div className="col-md-6">
+                                <label className="form-label">
+                                  Warehouse  Order
+                                </label>
+                                <input
+                                  type="text"
+                                  name="warehouse_order_id"
+                                  className="form-control"
+                                  placeholder="0.00"
+                                  onChange={handlechangepro}
+                                  onKeyPress={handlekey}
+                                />
+                              </div>
+                              <div className="col-md-6">
+                                <label className="form-label">
+                                  Costs to Collect
+                                </label>
+                                <input
+                                  type="text"
+                                  name="costs_to_collect"
+                                  className="form-control"
+                                  placeholder="0.00"
+                                  onKeyPress={handlekey}
+                                  onChange={handlechangepro}
+                                />
+                              </div>
+                            </div>
+                            <div className="row mb-3">
+                              <div className="col-md-6">
+                                <label className="form-label">
+                                  Warehouse dispatch
+                                </label>
+                                <input
+                                  type="text"
+                                  name="warehouse_dispatch"
+                                  className="form-control"
+                                  placeholder="0.00"
+                                  onChange={handlechangepro}
+                                />
+                              </div>
+                              <div className="col-md-6">
+                                <label className="form-label">
+                                  Waybill Ref
+                                </label>
+                                <input
+                                  type="text"
+                                  name="waybill_ref"
+                                  className="form-control"
+                                  placeholder="0.00"
+                                  onChange={handlechangepro}
+                                />
+                              </div>
+                            </div>
+                            <div className="row mb-3">
+                              <div className="col-md-6">
+                                <label className="form-label">
+                                  Warehouse Cost
+                                </label>
+                                <input
+                                  type="text"
+                                  name="warehouse_cost"
+                                  className="form-control"
+                                  placeholder="0.00"
+                                  onChange={handlechangepro}
+                                  onKeyPress={handlekey}
+                                />
+                              </div>
+                              <div className="col-md-6">
+                                <label className="form-label">
+                                  Cost to Dispatch
+                                </label>
+                                <input
+                                  type="text"
+                                  name="cost_to_dispatch"
+                                  className="form-control"
+                                  placeholder="0.00"
+                                  onKeyPress={handlekey}
+                                  onChange={handlechangepro}
+                                />
+                              </div>
+                            </div>
+                            <div className="row mb-3"></div>
+
+                            <div class="modal-footer"></div>
+                          </div>
+
+                          <Box mt={3} display="flex" justifyContent="flex-end">
+                            <Button
+                              variant="contained"
+                              onClick={handpechangepro}
+                            >
+                              Add Product
+                            </Button>
+                          </Box>
+                        </Box>
+                      </Modal>
                     </div>
                   </div>
                 </div>
-              
+              </div>
             </div>
           </div>
         </div>

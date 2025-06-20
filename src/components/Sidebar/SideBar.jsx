@@ -349,8 +349,7 @@ const SideBar = ({ children }) => {
                   <div
                     className="link dropdown-header"
                     style={{ cursor: "pointer" }}
-                    onClick={() => handleDropdownToggle(index)}
-                  >
+                    onClick={() => handleDropdownToggle(index)}>
                     <div className="icon ">{route.icon}</div>
                     <AnimatePresence>
                       {isOpen && (
@@ -359,8 +358,7 @@ const SideBar = ({ children }) => {
                           initial="hidden"
                           animate="show"
                           exit="hidden"
-                          className="link_text d-flex justify-content-between align-items-center"
-                        >
+                          className="link_text d-flex justify-content-between align-items-center">
                           <span>{route.name}</span>
                           {openDropdown === index ? (
                             <ExpandLessIcon />
@@ -376,8 +374,7 @@ const SideBar = ({ children }) => {
                       initial={{ height: 0 }}
                       animate={{ height: "auto" }}
                       exit={{ height: 0 }}
-                      className="sub_routes"
-                    >
+                      className="sub_routes">
                       {route.subRoutes.map((subRoute, subIndex) => (
                         <NavLink
                           to={subRoute.path}

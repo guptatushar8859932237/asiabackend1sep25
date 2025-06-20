@@ -70,6 +70,7 @@ import Editpdfclearance from "./pages/Editpdfclearance";
 import ViewDetails from "./pages/ViewDetails";
 import Editclearenceuser from "./pages/Editclearenceuser";
 import BookingInsForm from "./pages/BookingInsForm";
+import Clearenceorderdetailspage from "./pages/Clearenceorderdetailspage";
 const Dashboard = lazy(() => import("./pages/Dashboard"));
 const Users = lazy(() => import("./pages/Users"));
 const Messages = lazy(() => import("./pages/Messages"));
@@ -161,6 +162,11 @@ export default function App() {
                   index
                   path="/Admin/WarehouseOrder"
                   element={<WarehouseOrder />}
+                />
+                <Route
+                  index
+                  path="/Admin/AdminclearenceDetails"
+                  element={<Clearenceorderdetailspage />}
                 />
                 <Route
                   index
@@ -256,7 +262,11 @@ export default function App() {
                   element={<BatchesOrder />}
                 />
                 <Route index path="/Admin/profile" element={<Profile />} />
-                <Route index path="/Admin/Clearancedetails" element={<Clearancedetails />} />
+                <Route
+                  index
+                  path="/Admin/Clearancedetails"
+                  element={<Clearancedetails />}
+                />
                 <Route
                   index
                   path="/Admin/managefreight"
@@ -304,10 +314,10 @@ export default function App() {
                   path="/Admin/bookinginstruction"
                   element={<BookingInstruction />}
                 />
-                 <Route
+                <Route
                   index
                   path="/Admin/booking_instruction_form"
-                  element={<BookingInsForm/>}
+                  element={<BookingInsForm />}
                 />
                 <Route
                   index

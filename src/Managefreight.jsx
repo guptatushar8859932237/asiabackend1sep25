@@ -2675,10 +2675,10 @@ export default function Managefreight() {
   const [formData, setFormData] = useState(null);
   const [formData1, setFormData1] = useState(null);
   const [formData2, setFormData2] = useState(null);
+  const [formData3, setFormData3] = useState(null);
   const [filedata1, setFiledata1] = useState(null);
   const [freigtid, setFreightId] = useState(null);
   const [status1, setStatus1] = useState("Status");
-  const [formData3, setFormData3] = useState(null);
   const [staffdata, setStaffdata] = useState();
   const [updatedata, setUpdatedata] = useState([]);
   const [apidata, setApidata] = useState([]);
@@ -4693,7 +4693,7 @@ export default function Managefreight() {
                                             <div className="col-lg-4 spaceAssignEst">
                                               <div className="   rightSecFre ">
                                                 <div className=" borderShip">
-                                                  <div className="col-lg-12 mb-3 shipRefer">
+                                                  {/* <div className="col-lg-12 mb-3 shipRefer">
                                                     <FormControl>
                                                       <FormLabel id="demo-row-radio-buttons-group-label">
                                                         <label>
@@ -4780,7 +4780,7 @@ export default function Managefreight() {
                                                         />
                                                       </RadioGroup>
                                                     </FormControl>
-                                                  </div>
+                                                  </div> */}
                                                   <div className="shipRefer mb-3">
                                                     <FormControl>
                                                       <FormLabel id="demo-row-radio-buttons-group-label">

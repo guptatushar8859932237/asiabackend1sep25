@@ -350,11 +350,41 @@ export default function BatchesOrder() {
                               </tr>
                               <tr>
                                 <td>
-                                  <p class="client_para1">Cost to Collect:</p>
+                                  <p class="client_para1">Warehouse Costs Destination:</p>
                                 </td>
                                 <td>
                                   <p class="client_para1">
-                                    {datat1.costs_to_collect}
+                                    {datat1.warehouse_cost_des}
+                                  </p>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td>
+                                  <p class="client_para1">On carriage costs:</p>
+                                </td>
+                                <td>
+                                  <p class="client_para1">
+                                    {datat1.origin_oncarriage_costs}
+                                  </p>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td>
+                                  <p class="client_para1">Warehouse Costs Destination:</p>
+                                </td>
+                                <td>
+                                  <p class="client_para1">
+                                    {datat1.warehouse_cost_des}
+                                  </p>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td>
+                                  <p class="client_para1">Cost to Collect Destination:</p>
+                                </td>
+                                <td>
+                                  <p class="client_para1">
+                                    {datat1.costs_to_collect_des}
                                   </p>
                                 </td>
                               </tr>
@@ -368,14 +398,33 @@ export default function BatchesOrder() {
                                   </p>
                                 </td>
                               </tr>
-                              {/* <tr>
+                              <tr>
                                 <td>
-                                  <p class="client_para1 mb-3">Currency:</p>
+                                  <p class="client_para1">Incidental Cost:</p>
                                 </td>
                                 <td>
-                                  <p class="client_para1 mb-3"></p>
+                                  <p class="client_para1">
+                                    {datat1.origin_Incidental_costs}
+                                  </p>
                                 </td>
-                              </tr> */}
+                              </tr>
+                              <tr>
+                                <td>
+                                  <p class="client_para1">Packages :</p>
+                                </td>
+                                <td>
+                                  <p class="client_para1 ">  {datat1.total_freight_packages}</p>
+                                </td>
+                              </tr>
+                             
+                              <tr>
+                                <td>
+                                  <p class="client_para1 ">Shipments:</p>
+                                </td>
+                                <td>
+                                  <p class="client_para1 mb-3">{datat1.count_freight}</p>
+                                </td>
+                              </tr>
                             </tbody>
                           </table>
                         </div>
@@ -644,7 +693,7 @@ export default function BatchesOrder() {
                   </div>
                 </div>
               </div>
-              <div className="text-end">
+              {/* <div className="text-end">
                 <button
                   className="p-2 p-1 px-3  my-3 rounded ms-auto mb-2"
                   style={{
@@ -656,7 +705,7 @@ export default function BatchesOrder() {
                 >
                   Filter
                 </button>
-              </div>
+              </div> */}
               <TableContainer component={Paper}>
                 <Table>
                   <TableHead>
@@ -667,6 +716,8 @@ export default function BatchesOrder() {
                         Num. of Packages
                       </TableCell>
                       <TableCell className="fw-bold">Freight</TableCell>
+                      <TableCell className="fw-bold">Weight</TableCell>
+                      <TableCell className="fw-bold">Dimension</TableCell>
                       <TableCell className="fw-bold">Package Type</TableCell>
                       <TableCell className="fw-bold">Priority</TableCell>
                       <TableCell className="fw-bold">View</TableCell>
@@ -675,12 +726,17 @@ export default function BatchesOrder() {
                   <TableBody>
                     {freightData &&
                       freightData.length > 0 &&
-                      freightData.map((item, index) => (
-                        <TableRow key={index} className="border-bottom">
+                      freightData.map((item, index) => {
+                        console.log(item)
+                        return(
+                          <>
+                            <TableRow key={index} className="border-bottom">
                           <TableCell>{item.freight_number}</TableCell>
                           <TableCell>{item.client_Name}</TableCell>
                           <TableCell>{item.no_of_packages}</TableCell>
                           <TableCell>{item.freight}</TableCell>
+                          <TableCell>{item.weight}</TableCell>
+                          <TableCell>{item.dimension}</TableCell>
                           <TableCell>{item.package_type}</TableCell>
                           <TableCell>{item.priority}</TableCell>
                           <TableCell>
@@ -695,7 +751,11 @@ export default function BatchesOrder() {
                             {/* <ReplayIcon className='ms-2' onClick={() => handleclcickrevert(item)} /> */}
                           </TableCell>
                         </TableRow>
-                      ))}
+                          </>
+                        )
+                      }
+                      
+                      )}
                   </TableBody>
                 </Table>
               </TableContainer>

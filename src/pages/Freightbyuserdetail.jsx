@@ -1,13 +1,55 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import axios from "axios";
+import DeleteIcon from "@mui/icons-material/Delete";
+import { toast } from "react-toastify";
 export default function Freightbyuserdetail() {
   const infolocation = useLocation();
   const navigate = useNavigate();
+  const [document, setDocument] = useState([]);
+  const [document1, setDocument1] = useState([]);
+  const [packing, setPacking] = useState([]);
+  const [licenses, setLicenses] = useState([]);
   const info = infolocation?.state?.data[0];
   console.log(infolocation?.state?.data[0]);
   const handleclicknav = () => {
     navigate("/Admin/freight");
+  };
+  const GetFreightImages = () => {
+    console.log(info);
+    const data = { freight_id: info.freight_id };
+    axios
+      .post(`${process.env.REACT_APP_BASE_URL}GetFreightImages`, data)
+      .then((response) => {
+        console.log(response.data);
+        setDocument(response.data.data["Supplier Invoice"]);
+        setLicenses(response.data.data.Licenses);
+        setDocument1(response.data.data["Other Documents"]);
+        setPacking(response.data.data["Packing List"]);
+        console.log(response.data.data["Supplier Invoice"]);
+      })
+      .catch((error) => {
+        console.log(error.response.data);
+      });
+  };
+  useEffect(() => {
+    GetFreightImages();
+  }, []);
+  const deleteapi = (id) => {
+    console.log(id);
+    const data11 = {
+      doc_id: id,
+    };
+    axios
+      .post(`${process.env.REACT_APP_BASE_URL}DeleteDocument`, data11)
+      .then((response) => {
+        GetFreightImages();
+        toast.success(response.data.message);
+      })
+      .catch((error) => {
+        console.log(error.response.data);
+      });
   };
   return (
     <div className="wpWrapper">
@@ -73,16 +115,12 @@ export default function Freightbyuserdetail() {
                     <div className="view_box">
                       <h6 className="ship_hd">Pickup Address</h6>
                       <div className="d-flex align-items-start">
-                        <div className="">
-                          {/* <img src={Country} className='count_img' />  */}
-                        </div>
+                        <div className=""></div>
                         <div className="">
                           <p className="or_para">
                             {info.collection_from_country}
                           </p>
                           <p className="client_para">{info.port_of_loading}</p>
-                          {/* <p className='client_para'>Glan Marias,2 Annemoon Rd,Unit-4,</p>
-                          <p className='client_para'>KEMPTON PARK,1619,GP</p> */}
                         </div>
                       </div>
                     </div>
@@ -104,8 +142,6 @@ export default function Freightbyuserdetail() {
                         <i class="fi fi-rr-marker build_icon"></i>
                         <div className="">
                           <p className="client_para">{info.address_1}</p>
-                          {/* <p className='client_para'>Glan Marias,2 Annemoon Rd,Unit-4,</p>
-                          <p className='client_para'>KEMPTON PARK,1619,GP</p> */}
                         </div>
                       </div>
                     </div>
@@ -153,16 +189,12 @@ export default function Freightbyuserdetail() {
                     <div className="view_box">
                       <h6 className="ship_hd">Delivery Address</h6>
                       <div className="d-flex align-items-start">
-                        <div className="">
-                          {/* <img src={Country} className='count_img'/>  */}
-                        </div>
+                        <div className=""></div>
                         <div className="">
                           <p className="or_para">{info.delivery_to_country}</p>
                           <p className="client_para">
                             {info.post_of_discharge}
                           </p>
-                          {/* <p className='client_para'>Glan Marias,2 Annemoon Rd,Unit-4,</p>
-                          <p className='client_para'>KEMPTON PARK,1619,GP</p> */}
                         </div>
                       </div>
                     </div>
@@ -373,14 +405,6 @@ export default function Freightbyuserdetail() {
                                 <p class="client_para1">{info.product_desc}</p>
                               </td>
                             </tr>
-                            {/* <tr>
-                              <td><p class="client_para1">Hazardous:</p></td>
-                              <td><p class="client_para1">{info.hazardous}</p></td>
-                            </tr> */}
-                            {/* <tr>
-                              <td><p class="client_para1">Type:</p></td>
-                              <td><p class="client_para1">{info.fcl_lcl}</p></td>
-                            </tr> */}
                             <tr>
                               <td>
                                 <p class="client_para1">Industry:</p>
@@ -460,240 +484,125 @@ export default function Freightbyuserdetail() {
                   </div>
                 </div>
               </div>
-              {/* <div className='col-md-4'>
-              <div className='card desti_card1'>
-                <div className='card-body'>
-                  <div className=''>
-                    <h6 className='orgin_hd'>Shipping Estimate</h6>
-                    <span className='line'></span>
-                  </div>
-                  <div className='main_det'>
-                    <div className='table-responsive'>
-                      <table className='det_show'>
-                        <thead>
-                          <tr>
-                            <td className='ship_hd1'></td>
-                            <td className='ship_hd2'>Currency</td>
-                            <td className='ship_hd3 '>Cost</td>
-                            <td className='ship_hd4'>Billing</td>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr>
-                            <td className='ship_hd'>Freight<br />
-                              <p className='client_para1 mb-3'>{info?.freight}</p>
-                            </td>
-                            <td>
-                              <p className='client_para1 mb-3 ps-4'>{info?.estimate_freight_currency}</p>
-                            </td>
-                            <td>
-                              <p className='client_para1 mb-3 ps-4'>{info?.estimate_freight_amount}</p>
-                            </td>
-                            <td>
-                              <p className='client_para1 mb-3 ps-2'>{info?.estimate_freight_gp}</p>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td className='ship_hd'>Origin Charges<br />
-                              <p className='client_para1'>Origin Pickup</p>
-                            </td>
-                            <td>
-                              <p className='client_para1 mb-3 ps-4'>{info?.estimate_origin_warehouse}</p>
-                            </td>
-                            <td>
-                              <p className='client_para1 mb-3 ps-4'>{info?.estimate_origin_warehouse}</p>
-                            </td>
-                            <td>
-                              <p className='client_para1 mb-3 ps-2'>{info?.estimate_origin_warehouse_gp}</p>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <p className="client_para1">Origin Customs</p>
-                            </td>
-                            <td>
-                              <p className="client_para1"></p>
-                            </td>
-                            <td>
-                              <p className="client_para1"></p>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <p className="client_para1">
-                             Origin Document
-                              </p>
-                            </td>
-                            <td>
-                              <p className="client_para1"></p>
-                            </td>
-                            <td>
-                              <p className="client_para1"></p>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <p className="client_para1">
-                             Origin Warehouse
-                              </p>
-                            </td>
-                            <td>
-                              <p className="client_para1"></p>
-                            </td>
-                            <td>
-                              <p className="client_para1"></p>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <p className="client_para1">
-                             Origin Port Fees
-                              </p>
-                            </td>
-                            <td>
-                              <p className="client_para1"></p>
-                            </td>
-                            <td>
-                              <p className="client_para1"></p>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <p className="client_para1 mb-3">
-                             Origin Other
-                              </p>
-                            </td>
-                            <td>
-                              <p className="client_para1 mb-3"></p>
-                            </td>
-                            <td>
-                              <p className="client_para1 mb-3"></p>
-                            </td>
-                          </tr>
-                          {/* <tr>
-                            <td>
-                              <p className='client_para1 mb-3'>Origin Handling</p>
-                            </td>
-                            <td>
-                              <p className='client_para1 mb-3'>{info?.estimate_origin_pick_up}</p>
-                            </td>
-                            <td>
-                              <p className='client_para1 mb-3'>{info?.estimate_origin_pickup_gp}</p>
-                            </td>
-                            <td>
-                              <p className='client_para1 mb-3'>{info?.estimate_origin_pickup_gp}</p>
-                            </td>
-                          </tr> */}
-              {/* <tr>
-                            <td className='ship_hd'>Destination Charges<br />
-                              <p className='client_para1'>Delivery</p>
-                            </td>
-                            <td>
-                              <p className='client_para1'>{info?.estimate_des_warehouse}</p>
-                            </td>
-                            <td>
-                              <p className='client_para1'>{info?.estimate_des_warehouse_gp}</p>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <p className="client_para1">Destination Customs</p>
-                            </td>
-                            <td>
-                              <p className="client_para1"></p>
-                            </td>
-                            <td>
-                              <p className="client_para1"></p>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <p className="client_para1">Destination Documents</p>
-                            </td>
-                            <td>
-                              <p className="client_para1"></p>
-                            </td>
-                            <td>
-                              <p className="client_para1"></p>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <p className="client_para1">Destination Warehouse</p>
-                            </td>
-                            <td>
-                              <p className="client_para1"></p>
-                            </td>
-                            <td>
-                              <p className="client_para1"></p>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <p className="client_para1">Destination Port Fees</p>
-                            </td>
-                            <td>
-                              <p className="client_para1"></p>
-                            </td>
-                            <td>
-                              <p className="client_para1"></p>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <p className="client_para1">Destination Unpack</p>
-                            </td>
-                            <td>
-                              <p className="client_para1"></p>
-                            </td>
-                            <td>
-                              <p className="client_para1"></p>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <p className='client_para1'>Destination Other</p>
-                            </td>
-                            <td>
-                              <p className='client_para1'>{info?.estimate_des_delivery}</p>
-                            </td>
-                            <td>
-                              <p className='client_para1'>{info?.estimate_des_delivery_gp}</p>
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div> */}
-              <div className="col-md-4">
+              <div className="col-md-8">
                 <div className="card desti_card">
-                  <div className="card-body">
-                    {info?.add_attachment_file === null ? (
-                      <>
-                        <h6 className="orgin_hd">Attachments</h6>
-                        <p>No Document Uploaded</p>
-                      </>
-                    ) : (
-                      <>
-                        <div className="">
-                          <h6 className="orgin_hd">Attachments</h6>
-                          <span className="line"></span>
-                          <div className="d-flex align-items-center">
+                  <div className="card-body mb-3">
+                    <div className="mb-2 supplyInv ">
+                      <div>
+                        <label>Supplier Invoice : </label>
+                      </div>
+                        {document &&
+                          document.length > 0 &&
+                          document?.map((item, index) => {
+                            console.log(item);
+                            return (
+                              <>
+                                <a
+                                  href={`${process.env.REACT_APP_BASE_URLdocument}${item?.document}`}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="view_docu ms-2"
+                                >
+                                  View Document
+                                </a>
+                                <DeleteIcon
+                                  onClick={() => {
+                                    deleteapi(item.id);
+                                  }}
+                                  className="text-danger"
+                                  style={{ cursor: "pointer" }}
+                                />
+                              </>
+                            );
+                          })}
+                    </div>
+                    <div className="mb-2 ">
+                      <label>Other Document :</label>
+                      {document1?.map((item, index) => {
+                        return (
+                          <>
                             <a
-                              href={`${process.env.REACT_APP_BASE_URLdocument}${info?.add_attachment_file}`}
+                              href={`${process.env.REACT_APP_BASE_URLdocument}${item?.document}`}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="view_docu"
+                              className="view_docu ms-2"
                             >
                               View Document
                             </a>
-                          </div>
-                        </div>
-                      </>
-                    )}
+                            <DeleteIcon
+                              onClick={() => {
+                                deleteapi(item.id);
+                              }}
+                              className="text-danger"
+                              style={{ cursor: "pointer" }}
+                            />
+                          </>
+                        );
+                      })}
+                    </div>
+                    <div className="mb-2 ">
+                      <label>packing List :</label>
+                      {packing?.map((item, index) => {
+                        return (
+                          <>
+                            <a
+                              href={`${process.env.REACT_APP_BASE_URLdocument}${item?.document}`}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="view_docu ms-2"
+                            >
+                              View Document
+                            </a>
+                            <DeleteIcon
+                              onClick={() => {
+                                deleteapi(item.id);
+                              }}
+                              className="text-danger"
+                              style={{ cursor: "pointer" }}
+                            />
+                          </>
+                        );
+                      })}
+                    </div>
+                    <div className="mb-2 ">
+                      <label>Licenses Docs :</label>
+                      {licenses?.map((item, index) => {
+                        return (
+                          <>
+                            <a
+                              href={`${process.env.REACT_APP_BASE_URLdocument}${item?.document}`}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="view_docu ms-2"
+                            >
+                              View Document
+                            </a>
+                            <DeleteIcon
+                              onClick={() => {
+                                deleteapi(item.id);
+                              }}
+                              className="text-danger"
+                              style={{ cursor: "pointer" }}
+                            />
+                          </>
+                        );
+                      })}
+                    </div>
+                    <div className="mb-2 ">
+                      <label>Attach Quotation :</label>
+                      {info.attachment_Estimate === null ? (
+                        ""
+                      ) : (
+                        <a
+                          href={`${process.env.REACT_APP_BASE_URLdocument}${info?.attachment_Estimate}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="view_docu ms-2"
+                        >
+                          View Document
+                        </a>
+                      )}
+                    </div>
                   </div>
                 </div>
               </div>

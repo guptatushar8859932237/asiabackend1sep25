@@ -501,15 +501,6 @@ export default function ClearanceOrder() {
               </div>
             </div>
             <div className="row mb-3">
-              {/* <div className="col-6">
-                            <label>Freight</label>
-                            <select name="freight" onChange={handlechange}>
-                              <option value="">Select...</option>
-                              <option value="Sea">Sea</option>
-                              <option value="Air">Air</option>
-                              <option value="Road">Road</option>
-                            </select>
-                          </div> */}
               <div className="col-6">
                 <label>Is This</label>
                 <div className="shipRefer">
@@ -534,42 +525,6 @@ export default function ClearanceOrder() {
                 </div>
               </div>
             </div>
-            {/* <div className="row">
-                    <div className="col-md-6">
-                      <label>Shipment Refrence</label>
-                      <div className="shipRefer">
-                        <input
-                          type="text"
-                          id="stausone"
-                          name="customer_ref"
-                          className="w-100 rounded py-1 px-2 sel_custom"
-                          placeholder="Shipment Reference"
-                        />
-                      </div>
-                    </div>
-                    <div className="col-md-6">
-                      <label>Sales Representative</label>
-                      <div className="shipRefer">
-                        <select
-                          name="sales_representative"
-                          onChange={ handlechange}
-                        >
-                          <option value="">Select...</option>
-                          {staffdata &&
-                            staffdata.length > 0 &&
-                            staffdata.map((item, index) => {
-                              return (
-                                <>
-                                  <option value={item.id} key={index}>
-                                    {item.full_name}
-                                  </option>
-                                </>
-                              );
-                            })}
-                        </select>
-                      </div>
-                    </div>
-                  </div> */}
             <div className="row">
               <div className="col-md-12">
                 <h6 className="md_heading text-start mt-0">Port of Clearing Details</h6>

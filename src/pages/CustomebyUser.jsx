@@ -41,6 +41,10 @@ export default function CustomebyUserap() {
   const [error, setError] = useState([]);
   const [image1, setImage1] = useState(null);
   const [image2, setImahe2] = useState(null);
+  const [document, setDocument] = useState([]);
+  const [document1, setDocument1] = useState([]);
+  const [packing, setPacking] = useState([]);
+  const [licenses, setLicenses] = useState([]);
   const [constgetdata, setConstgetdata] = useState("");
   const [erd, setErd] = useState("");
   const [inputdata, setInputdata] = useState({});
@@ -53,6 +57,10 @@ export default function CustomebyUserap() {
   const [openeditmodal, setOpeneditmodal] = useState(false);
   const [loader, setLoader] = useState(false);
   const [staffdata, setStaffdata] = useState([]);
+  const [formData11, setFormData11] = useState(null);
+  const [formData1, setFormData1] = useState(null);
+  const [formData2, setFormData2] = useState(null);
+  const [formData3, setFormData3] = useState(null);
   const [imageupload2, setimageupload2] = useState(null);
   const [country, setCountry] = useState([]);
   const [age, setAge] = React.useState("");
@@ -93,7 +101,22 @@ export default function CustomebyUserap() {
   const handleclick = () => {
     handlevalifdate(data);
   };
-
+  const handleFileChange4 = (event) => {
+    const files = event.target.files;
+    setFormData11({ ...formData11, supplier_invoice: files });
+  };
+  const handleFileChange1 = (event) => {
+    const files = event.target.files;
+    setFormData1({ ...formData1, packing_list: files });
+  };
+  const handleFileChange2 = (event) => {
+    const files = event.target.files;
+    setFormData2({ ...formData2, licenses: files });
+  };
+  const handleFileChange3 = (event) => {
+    const files = event.target.files;
+    setFormData3({ ...formData3, other_documents: files });
+  };
   const apihit = () => {
     const formdata = new FormData();
     formdata.append("trans_reference", data.trans_reference);
@@ -110,6 +133,27 @@ export default function CustomebyUserap() {
     formdata.append("document", image1);
     formdata.append("sad500", image2);
     formdata.append("comment_on_docs", data.comment_on_docs);
+
+    if (formData11) {
+      for (let i = 0; i < formData11.supplier_invoice.length; i++) {
+        formdata.append("product_literature", formData11.supplier_invoice[i]);
+      }
+    }
+    if (formData1) {
+      for (let i = 0; i < formData1.packing_list.length; i++) {
+        formdata.append("packing_list", formData1.packing_list[i]);
+      }
+    }
+    if (formData2) {
+      for (let i = 0; i < formData2.licenses.length; i++) {
+        formdata.append("licenses", formData2.licenses[i]);
+      }
+    }
+    if (formData3) {
+      for (let i = 0; i < formData3.other_documents.length; i++) {
+        formdata.append("other_documents", formData3.other_documents[i]);
+      }
+    }
     axios
       .post(`${process.env.REACT_APP_BASE_URL}add-clearing`, formdata)
       .then((response) => {
@@ -525,7 +569,7 @@ export default function CustomebyUserap() {
             </button>
           </div>
           <div className="newModalGap noFormaControl">
-            <div className="row mb-3">
+            <div className="row mb-3 p-3">
               <div className="col-6">
                 <label>Freight</label>
                 <select
@@ -867,7 +911,52 @@ export default function CustomebyUserap() {
                 </div>
               </div>
             </div>
-
+            <div className="row">
+              <div className="col-6 mt-3">
+                <h5>Add attachments</h5>
+                <input
+                  type="file"
+                  name="supplier_invoice"
+                  className="w-100 mb-3 rounded"
+                  onChange={handleFileChange4}
+                  multiple
+                />
+              </div>
+              <div className="col-6 mt-3">
+                <h5>Packing List</h5>
+                <input
+                  type="file"
+                  name="packing_list"
+                  className="mb-3 w-100 rounded"
+                  onChange={handleFileChange1}
+                  multiple
+                />
+              </div>
+            </div>
+            <div className="row">
+              <div className="col-6 mt-3">
+                <h5>Other Documents</h5>
+                <input
+                  type="file"
+                  name="other_documents"
+                  className="mb-3 w-100 rounded"
+                  onChange={handleFileChange3}
+                  multiple
+                />
+              </div>
+             
+                <div className="col-6 mt-3">
+                  <h5>licenses</h5>
+                  <input
+                    type="file"
+                    name="licenses"
+                    className="mb-3 w-100 rounded"
+                    onChange={handleFileChange2}
+                    multiple
+                  />
+                
+              </div>
+            </div>
             <Button variant="contained" onClick={updatedata}>
               Update
             </Button>

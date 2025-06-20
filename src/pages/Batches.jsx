@@ -580,6 +580,7 @@ export default function Batches() {
                         <TableCell className="fw-bold">Freight</TableCell>
                         <TableCell className="fw-bold">Dimension</TableCell>
                         <TableCell className="fw-bold">Weight</TableCell>
+                        <TableCell className="fw-bold">Packages</TableCell>
                         <TableCell className="fw-bold col-1">Origin</TableCell>
                         <TableCell className="fw-bold">Destination</TableCell>
                         <TableCell className="fw-bold">
@@ -604,8 +605,9 @@ export default function Batches() {
                                 <TableCell>{item?.batch_number}</TableCell>
                                 <TableCell>{item?.freight}</TableCell>
 
-                                <TableCell>{item?.total_dimensions}</TableCell>
-                                <TableCell>{item?.total_weight}</TableCell>
+                                <TableCell>{item?.total_freight_dimension}</TableCell>
+                                <TableCell>{item?.total_freight_weight}</TableCell>
+                                <TableCell>{item?.total_freight_packages}</TableCell>
                                 <TableCell className="col-1">
                                   {item?.origin_country_name}
                                 </TableCell>
