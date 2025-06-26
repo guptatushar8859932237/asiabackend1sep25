@@ -1107,19 +1107,23 @@ export default function MAnageshipments() {
   const handlePageChange = (page) => {
     setCurrentPage(page);
   };
-    const userid = JSON.parse(localStorage.getItem("data123"))?.id;
+  const userid = JSON.parse(localStorage.getItem("data123"))?.id;
   const usertype = JSON.parse(localStorage.getItem("data123"))?.user_type;
-  const openModal1 =async () => {
+  const openModal1 = async () => {
     try {
-      const permission = await axios.post(`${process.env.REACT_APP_BASE_URL}CheckPermission`, {
-        staff_id: userid,
-        user_type: usertype,
-        route_url: "/Admin/addshipment",})
-        if (permission.data?.success === true) {
-        navigate("/Admin/addshipment");}
-        else{
-          toast.error("You don't have permission to add shipment")
+      const permission = await axios.post(
+        `${process.env.REACT_APP_BASE_URL}CheckPermission`,
+        {
+          staff_id: userid,
+          user_type: usertype,
+          route_url: "/Admin/addshipment",
         }
+      );
+      if (permission.data?.success === true) {
+        navigate("/Admin/addshipment");
+      } else {
+        toast.error("You don't have permission to add shipment");
+      }
     } catch (error) {
       if (error.response && error.response.status === 400) {
         toast.error("Permission Denied: You don’t have access to this page");
@@ -1158,7 +1162,7 @@ export default function MAnageshipments() {
       });
   };
   const openModal2 = (id) => {
-    setShipmentID(id)
+    setShipmentID(id);
     const postshipmentpost = {
       shipment_id: id,
     };
@@ -1206,86 +1210,91 @@ export default function MAnageshipments() {
       setFilesd(file);
     }
   };
-  const apiupdatepost =async () => {
+  const apiupdatepost = async () => {
     try {
-      const datapost ={
+      const datapost = {
         staff_id: userid,
         user_type: usertype,
-        route_url: "UpdateShipment",
+        route_url: "/UpdateShipment",
+      };
+      const permission = await axios.post(
+        `${process.env.REACT_APP_BASE_URL}CheckPermission`,
+        datapost
+      );
+      console.log(permission);
+      if (permission.data.success === true) {
+        console.log(tindexdata);
+        const formdata = new FormData();
+        formdata.append("shipment_id", shipmentID);
+        formdata.append("waybill", inputdata.waybill);
+        formdata.append("freight", inputdata.freight);
+        formdata.append("carrier", inputdata.carrier);
+        formdata.append("vessel", inputdata.vessel);
+        formdata.append("ETD", inputdata.ETD);
+        formdata.append("date_of_dispatch", formatteddispatch);
+        formdata.append("ATD", inputdata.ATD);
+        formdata.append("status", inputdata.status);
+        formdata.append("origin_agent", inputdata.origin_agent);
+        formdata.append("port_of_loading", inputdata.port_of_loading);
+        formdata.append("port_of_discharge", inputdata.port_of_discharge);
+        formdata.append("destination_agent", inputdata.destination_agent);
+        formdata.append("load", inputdata.load);
+        formdata.append("release_type", inputdata.release_type);
+        formdata.append("container", inputdata.container);
+        formdata.append("seal", inputdata.seal);
+        formdata.append("details", JSON.stringify(tindexdata));
+        formdata.append("des_country_id", inputdata.des_country_id);
+        formdata.append("origin_country_id", inputdata.origin_country_id);
+        formdata.append("document", filesd);
+        axios
+          .post(`${process.env.REACT_APP_BASE_URL}UpdateShipment`, formdata)
+          .then((response) => {
+            try {
+              toast.success("Shipment Update successfully");
+              console.log("Response Data:", response.data);
+              if (response.data.success === true) {
+                closeModal2();
+                getwarehouse();
+              }
+            } catch (err) {
+              console.error("Error in then block:", err);
+              throw err;
+            }
+          })
+          .catch((error) => {
+            console.error("Error Response:", error.response);
+            if (error.response && error.response.data) {
+              console.log(error.response.data.message);
+            } else {
+              console.log("Error:", error.message);
+            }
+          });
+      } else {
+        toast.error("permission denied");
       }
-      const permission =await axios.post(`${process.env.REACT_APP_BASE_URL}CheckPermission`,datapost)
-      console.log(permission)
-  if(permission.data.success===true){
-    console.log(tindexdata);
-    const formdata = new FormData();
-    formdata.append("shipment_id", shipmentID);
-    formdata.append("waybill", inputdata.waybill);
-    formdata.append("freight", inputdata.freight);
-    formdata.append("carrier", inputdata.carrier);
-    formdata.append("vessel", inputdata.vessel);
-    formdata.append("ETD", inputdata.ETD);
-    formdata.append("date_of_dispatch", formatteddispatch);
-    formdata.append("ATD", inputdata.ATD);
-    formdata.append("status", inputdata.status);
-    formdata.append("origin_agent", inputdata.origin_agent);
-    formdata.append("port_of_loading", inputdata.port_of_loading);
-    formdata.append("port_of_discharge", inputdata.port_of_discharge);
-    formdata.append("destination_agent", inputdata.destination_agent);
-    formdata.append("load", inputdata.load);
-    formdata.append("release_type", inputdata.release_type);
-    formdata.append("container", inputdata.container);
-    formdata.append("seal", inputdata.seal);
-    formdata.append("details", JSON.stringify(tindexdata));
-    formdata.append("des_country_id", inputdata.des_country_id);
-    formdata.append("origin_country_id", inputdata.origin_country_id);
-    formdata.append("document", filesd);
-    axios
-      .post(`${process.env.REACT_APP_BASE_URL}UpdateShipment`, formdata)
-      .then((response) => {
-        try {
-          toast.success("Shipment Update successfully");
-          console.log("Response Data:", response.data);
-          if (response.data.success === true) {
-            closeModal2();
-            getwarehouse();
-          }
-        } catch (err) {
-          console.error("Error in then block:", err);
-          throw err;
-        }
-      })
-      .catch((error) => {
-        console.error("Error Response:", error.response);
-        if (error.response && error.response.data) {
-          console.log(error.response.data.message);
-        } else {
-          console.log("Error:", error.message);
-        }
-      });
-  }else{
-  toast.error("permission denied")
-  }
-} catch (error) {
-  if (error.response && error.response.status === 400) {
-    toast.error("Permission Denied: You don’t have access to this page");
-  } else {
-    toast.error("Something went wrong while checking permission.");
-  }
-}
-
-  
+    } catch (error) {
+      if (error.response && error.response.status === 400) {
+        toast.error("Permission Denied: You don’t have access to this page");
+      } else {
+        toast.error("Something went wrong while checking permission.");
+      }
+    }
   };
 
   const deletewarehouse = async (id) => {
+    console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>");
     try {
       const payload = {
         user_type: usertype,
         staff_id: userid,
         route_url: "/DeleteShipment",
       };
-  
-      const permission = await axios.post(`${process.env.REACT_APP_BASE_URL}CheckPermission`, payload);
-  console.log(permission)
+
+      const permission = await axios.post(
+        `${process.env.REACT_APP_BASE_URL}CheckPermission`,
+        payload
+      );
+      console.log(permission);
       if (permission.status === 200) {
         const result = await Swal.fire({
           title: "Are you sure?",
@@ -1299,7 +1308,10 @@ export default function MAnageshipments() {
         if (result.isConfirmed) {
           const datadelete = { shipment_id: id };
           try {
-            const response = await axios.post(`${process.env.REACT_APP_BASE_URL}DeleteShipment`, datadelete);
+            const response = await axios.post(
+              `${process.env.REACT_APP_BASE_URL}DeleteShipment`,
+              datadelete
+            );
             toast.success(response.data.message);
             getwarehouse();
             Swal.fire("Deleted!", "Your file has been deleted.", "success");
@@ -1308,7 +1320,7 @@ export default function MAnageshipments() {
             toast.error("Failed to delete the warehouse!");
           }
         }
-      } 
+      }
     } catch (error) {
       if (error.response && error.response.data.status === 400) {
         toast.error("Permission Denied: You don’t have access to this page");
@@ -1321,7 +1333,7 @@ export default function MAnageshipments() {
   // const deletewarehouse = (id) => {
   //   try {
   //     const payload = {
-        
+
   //         user_type:usertype ,
   //         staff_id: userid,
   //         route_url: "/DeleteShipment"
@@ -1339,7 +1351,7 @@ export default function MAnageshipments() {
   //         }).then((result) => {
   //           if (result.isConfirmed) {
   //             const datadelete = { shipment_id: id };
-        
+
   //             axios
   //               .post(`${process.env.REACT_APP_BASE_URL}DeleteShipment`, datadelete)
   //               .then((response) => {
@@ -1368,8 +1380,7 @@ export default function MAnageshipments() {
   //       toast.error("Something went wrong while checking permission.");
   //     }
   //   }
-   
-   
+
   // };
   useEffect(() => {
     if (inputdata.des_country_id && inputdata.origin_country_id) {
@@ -1565,7 +1576,23 @@ export default function MAnageshipments() {
                                 <div
                                   className="progress-bar progress-bar-striped bg-success"
                                   role="progressbar"
-                                  style={{ width: `${item.status==="Goods at origin port"?"20%":item.status==="Goods are in transit"?"40%":item.status==="Arrived at destination port"?"60%":item.status==="Customs clearing in progress"?"80%":item.status==="Customs released"?"100%":"25%"}` }}
+                                  style={{
+                                    width: `${
+                                      item.status === "Goods at origin port"
+                                        ? "20%"
+                                        : item.status === "Goods are in transit"
+                                        ? "40%"
+                                        : item.status ===
+                                          "Arrived at destination port"
+                                        ? "60%"
+                                        : item.status ===
+                                          "Customs clearing in progress"
+                                        ? "80%"
+                                        : item.status === "Customs released"
+                                        ? "100%"
+                                        : "25%"
+                                    }`,
+                                  }}
                                 />
                               </div>
                               <div className="dropdown text-end">

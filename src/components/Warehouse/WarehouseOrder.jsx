@@ -1608,7 +1608,6 @@ export default function WarehouseOrder() {
       packages: selectedData.packages,
       dimension: selectedData.dimension,
       weight: selectedData.weight,
-
       costs_to_collect: selectedData.costs_to_collect,
       warehouse_cost: selectedData.warehouse_cost,
       warehouse_dispatch: selectedData.warehouse_dispatch,
