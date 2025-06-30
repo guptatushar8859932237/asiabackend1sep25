@@ -2,7 +2,6 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { FaUser } from "react-icons/fa";
 import { useState, useEffect } from "react";
 import { BiRightArrowCircle } from "react-icons/bi";
-
 import { AnimatePresence, motion } from "framer-motion";
 import { BiLeftArrowCircle } from "react-icons/bi";
 import whiteLogoNew from "../../images/logoWhiteNew.png";

@@ -17,6 +17,7 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import { useLocation, useNavigate } from "react-router-dom";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import CloseIcon from "@mui/icons-material/Close";
+import { Delete } from "@mui/icons-material";
 
 export default function BatchesOrder() {
   const [batch, setBatch] = useState([]);
@@ -83,14 +84,15 @@ export default function BatchesOrder() {
   const handleclcickrevert = (item) => {
     console.log(item);
     const data123 = {
-      freight_id: item.freight_id,
+      freight_id: item.freight_ID,
       batch_id: item.batch_id,
     };
+    console.log(data123);
     axios
-      .post(`${process.env.REACT_APP_BASE_URL}restoreOrderFromBatch`, data123)
+      .post(`${process.env.REACT_APP_BASE_URL}revertMovedFreight`, data123)
       .then((response) => {
         toast.success(response.data.message);
-        getdata();
+        clickapival();
       })
       .catch((error) => {
         toast.error(error.response.data.message);
@@ -748,7 +750,7 @@ export default function BatchesOrder() {
                                 width: "20px",
                               }}
                             />
-                            {/* <ReplayIcon className='ms-2' onClick={() => handleclcickrevert(item)} /> */}
+                            <Delete className='ms-2' onClick={() => handleclcickrevert(item)} />
                           </TableCell>
                         </TableRow>
                           </>

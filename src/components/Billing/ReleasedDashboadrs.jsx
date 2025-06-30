@@ -90,7 +90,7 @@ export default function ReleasedDashboadrs() {
             <table className="table table-striped tableICon">
               <thead>
                 <tr>
-                  <th scope="col">Freight</th>
+                  <th scope="col">Order Number</th>
                   <th scope="col">Costumer Name</th>
                   <th scope="col">clearing Status</th>
                   <th scope="col">cargo Inspection</th>
@@ -107,8 +107,8 @@ export default function ReleasedDashboadrs() {
                     console.log(item);
                     return (
                       <tr className="border-bottom" key={index}>
-                        <td>{item.sage_document_number}</td>
-                        <td>{item.sage_customer_name}</td>
+                        <td>{item.order_number	}</td>
+                        <td>{item.order_user_name}</td>
                         <td>{item.clearance_status}</td>
                         <td>
                           <select
@@ -140,24 +140,6 @@ export default function ReleasedDashboadrs() {
                   })}
               </tbody>
             </table>
-            {/* <div className="text-center d-flex justify-content-end align-items-center">
-                              <button
-                                disabled={currentPage === 1}
-                                className="bg_page"
-                                onClick={() => handlePageChange(currentPage - 1)}
-                              >
-                                {" "}
-                                <i class="fi fi-rr-angle-small-left page_icon"></i>
-                              </button>
-                              <span className="mx-2">{`Page ${currentPage} of ${totalPages}`}</span>
-                              <button
-                                disabled={currentPage === totalPages}
-                                className="bg_page"
-                                onClick={() => handlePageChange(currentPage + 1)}
-                              >
-                                <i class="fi fi-rr-angle-small-right page_icon"></i>
-                              </button>
-                            </div> */}
           </div>
           <ToastContainer />
         </div>
