@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import Select from "react-select";
-import { gapi } from "gapi-script";
 const Addfright = () => {
   const [lcientlist, setLcientlist] = useState([]);
   const [staffdata, setStaffdata] = useState([]);
@@ -263,16 +262,18 @@ const Addfright = () => {
     formdata.append("shipper_name", data.shipper_name);
     formdata.append("insurance", data.insurance);
     formdata.append("shipment_ref", data.shipment_ref);
+    formdata.append("fcl_lcl", data.fcl_lcl);
+    formdata.append("documentName", data.documentName);
     formdata.append(
       "client_ref_name",
       refane == "[object Object]" ? selectedOption.clientemail : refane
     );
-    formdata.append("fcl_lcl", data.fcl_lcl);
-    Object.entries(formFiles).forEach(([key, files]) => {
-      files.forEach((file) => {
-        formdata.append(key, file); // backend should use multer.array(fieldName)
-      });
-    });
+    const keybane = data.documentName
+   Object.values(formFiles).forEach((files) => {
+  files.forEach((file) => {
+    formdata.append("document", file); // static key
+  });
+});
     console.log(formdata);
     axios
       .post(`${process.env.REACT_APP_BASE_URL}add-freight`, formdata)
@@ -1322,7 +1323,39 @@ const Addfright = () => {
                           />
                         </div>
                       </div>
-                      <div className="row">
+  <div className="row">
+                        <div className="col-6 mt-3">
+                          <label>Select Document </label>
+                          <select name="documentName" onChange={handlechange}>
+                            <option value="">Select...</option>
+                            <option value="Customs Documents">Customs docs</option>
+                            <option value="Supporting Documents">Supporting docs</option>
+                            <option value="Invoice, Packing List">Invoice / Packing L</option>
+                            <option value="Product Literature">Product Literature</option>
+                            <option value="Letters of authority">LOA</option>
+                            <option value="Waybills">Freight Docs</option>
+                            <option value="Waybills">Shipping instruction</option>
+                            <option value="Supplier Invoices">Freight Invoices </option>
+                            <option value="AD_Quotations">Attach Quote</option>
+                          </select>
+                        </div>
+                        <div className="col-6 mt-3">
+                          <label>Upload Document</label>
+                          <input
+                            type="file"
+                            multiple
+                            className="w-100 mb-3 rounded"
+                            onChange={(e) =>
+                              handleFileChange(e, "other_documents")
+                            }
+                          />
+                        </div>
+                      </div> 
+
+
+
+
+                      {/* {/* <div className="row">
                         <div className="col-6 mt-3">
                           <label>Add attachments</label>
                           <input
@@ -1333,33 +1366,35 @@ const Addfright = () => {
                               handleFileChange(e, "supplier_invoice")
                             }
                           />
-                          {/* <input
-                            type="file"
-                            name="supplier_invoice"
-                            className="w-100 mb-3 rounded"
-                            onChange={handleFileChange}
-                            multiple
-                          /> */}
                         </div>
-                        {/* <div className="col-6 mt-3">
-                          <label>Packing List</label>
-                          <input
-                            type="file"
-                            name="packing_list"
-                            className="mb-3 w-100 rounded"
-                            onChange={handleFileChange1}
-                            multiple
-                          />
-                        </div> */}
                         <div className="col-6 mt-3">
                           <label>Packing List</label>
-                          {/* <input
+                         
+                          <input
                             type="file"
-                            name="packing_list"
-                            className="w-100 mb-3 rounded"
-                            onChange={handleFileChange1}
                             multiple
-                          /> */}
+                            className="w-100 mb-3 rounded"
+                            onChange={(e) =>
+                              handleFileChange(e, "packing_list")
+                            }
+                          />
+                        </div>
+                      </div> */}
+                      {/* <div className="row">
+                        <div className="col-6 mt-3">
+                          <label>Add attachments</label>
+                          <input
+                            type="file"
+                            multiple
+                            className="w-100 mb-3 rounded"
+                            onChange={(e) =>
+                              handleFileChange(e, "supplier_invoice")
+                            }
+                          />
+                        </div>
+                        <div className="col-6 mt-3">
+                          <label>Packing List</label>
+                         
                           <input
                             type="file"
                             multiple
@@ -1373,13 +1408,6 @@ const Addfright = () => {
                       <div className="row">
                         <div className="col-6 mt-3">
                           <label>licenses</label>
-                          {/* <input
-                            type="file"
-                            name="licenses"
-                            className="mb-3 w-100 rounded"
-                            onChange={handleFileChange2}
-                            multiple
-                          /> */}
                           <input
                             type="file"
                             multiple
@@ -1389,13 +1417,6 @@ const Addfright = () => {
                         </div>
                         <div className="col-6 mt-3">
                           <label>Other Documents</label>
-                          {/* <input
-                            type="file"
-                            name="other_documents"
-                            className="mb-3 w-100 rounded"
-                            onChange={handleFileChange3}
-                            multiple
-                          /> */}
                           <input
                             type="file"
                             multiple
@@ -1405,7 +1426,7 @@ const Addfright = () => {
                             }
                           />
                         </div>
-                      </div>
+                      </div> */}
                       <div className="row">
                         <div className="col-12">
                           <label>Comment</label>
