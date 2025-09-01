@@ -1506,7 +1506,7 @@ export default function WarehouseOrder() {
     setCurrentPage(page);
   };
   const handleEditClick = (freight_ID, warehouse_assign_order_id, order_id) => {
-    console.log(freight_ID);
+    console.log(freight_ID, warehouse_assign_order_id, order_id);
     setOrderID(order_id);
     setErd(warehouse_assign_order_id);
     const selectedData = data.find((item) => item.freight_ID === freight_ID);
@@ -1605,8 +1605,9 @@ export default function WarehouseOrder() {
       warehouse_collect: selectedData.warehouse_collect,
       date_received: selectedData.date_received,
       package_type: selectedData.package_type,
+      no_of_packages: selectedData.no_of_packages,
       packages: selectedData.packages,
-      dimension: selectedData.dimension,
+      total_dimension: selectedData.total_dimension,
       weight: selectedData.weight,
       costs_to_collect: selectedData.costs_to_collect,
       warehouse_cost: selectedData.warehouse_cost,
@@ -2246,7 +2247,7 @@ export default function WarehouseOrder() {
                       >
                         <Box sx={style1}>
                           <div className="modal-header">
-                            <h2 id="modal-modal-title">Edit Warehouse Order</h2>
+                            <h2 id="modal-modal-title">Edit Warehouse Order11</h2>
                             <button
                               className="btn btn-close"
                               onClick={handleCloseModal}
@@ -2363,8 +2364,8 @@ export default function WarehouseOrder() {
                                       fullWidth
                                       label="Dimension"
                                       variant="outlined"
-                                      name="dimension"
-                                      value={selectedData.dimension || ""}
+                                      name="total_dimension"
+                                      value={selectedData.total_dimension || ""}
                                       onChange={handleInputChange}
                                     />
                                   </Grid>
@@ -2597,7 +2598,7 @@ export default function WarehouseOrder() {
                               </div>
                               <div className="col-md-6">
                                 <label className="form-label">
-                                  supplier</label>
+                                  Supplier</label>
                                 <input
                                   type="text"
                                   name="supplier"

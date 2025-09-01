@@ -3328,7 +3328,7 @@ export default function Waybill() {
   const [data, setData] = useState({});
   const navigate = useNavigate();
   const getdat = location.state.data;
-  console.log(getdat);
+  console.log(location);
   // const { toPDF, targetRef } = usePDF({ filename: "page.pdf" });
   const handleclicknav = () => {
     navigate("/Admin/order");
@@ -3559,13 +3559,13 @@ export default function Waybill() {
                                         >
                                           <strong style={{paddingBottom:"2mm"}}> Consignee:</strong>
                                           <br />
-                                          {getdat.client_name}
+                                          {getdat?.client_name}
                                           {/* <br /> */}
                                           {/* {getdat.client_email} */}
                                           <br />
-                                          {getdat.address_1}
+                                          {getdat?.address_1}
                                           <br />
-                                          {getdat.city}
+                                          {getdat?.city}
                                           <br />
                                         </td>
                                       </tr>

@@ -30,7 +30,7 @@ export default function Addshipment() {
   const [batchOptions, setBatchOptions] = useState([]);
   const [countries, setCountries] = useState([]);
   const [filedata, setFiledata] = useState(null);
-  const [aggregatedArray, setAggregatedArray] = useState([]);   
+  const [aggregatedArray, setAggregatedArray] = useState([]);
   const [selectedOption, setSelectedOption] = useState(null);
   const navigate = useNavigate();
   useEffect(() => {
@@ -422,7 +422,6 @@ export default function Addshipment() {
                 </div>
               </div>
             </div>
-
             <div className="col-lg-4">
               <div className="row">
                 <div className="col-12">
